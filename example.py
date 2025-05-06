@@ -29,6 +29,8 @@ def main():
                         help="Client listen port (default: 1080)")
     parser.add_argument("--server-port", type=int, default=19898, 
                         help="Server listen port (default: 19898)")
+    parser.add_argument("--server-host", default="localhost", 
+                        help="Server host for client (default: localhost)")
     parser.add_argument("--target-host", default="localhost", 
                         help="Target host for server (default: localhost)")
     parser.add_argument("--target-port", type=int, default=80, 
@@ -46,7 +48,7 @@ def main():
     if args.mode == "client":
         print(f"Starting client with {args.compression} compression (level {args.level})")
         client = ClientTunnel(args.compression, args.level, low_latency, args.buffer_size)
-        client.run(args.client_port, "localhost", args.server_port, 
+        client.run(args.client_port, args.server_host, args.server_port, 
                   args.compression, args.level, low_latency, args.buffer_size)
     else:
         print(f"Starting server with {args.compression} compression (level {args.level})")
